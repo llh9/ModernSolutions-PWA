@@ -20,8 +20,18 @@ app.get('/', (req, res) =>{
 const CONNECTION_URL = 'mongodb+srv://landon:password12345@cluster0.um9k3.mongodb.net/memories-db?retryWrites=true&w=majority';
 const PORT = process.env.PORT|| 5000;
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
-  .catch((error) => console.log(`${error} did not connect`));
+mongoose.connect(
+  process.env.MONGODB_URI || CONNECTION_URL, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+})
+.then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+.catch((error) => console.log(`${error} did not connect`));
 
 mongoose.set('useFindAndModify', false);
+
+// mongoose.connect(process.env.MONGODB_URI || process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+//   .catch((error) => console.log(`${error} did not connect`));
+
+// mongoose.set('useFindAndModify', false);
